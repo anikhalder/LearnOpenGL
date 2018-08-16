@@ -6,12 +6,11 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
-int TwoTrianglesSingleBufferSameColor();
-int TwoTrianglesMultipleBuffersDifferentColors();
-int TwoTrianglesSingleBufferDifferentColor();
+int DrawTwoTrianglesSingleBufferSameColor();
+int DrawTwoTrianglesMultipleBuffersDifferentColors();
+int DrawTwoTrianglesSingleBufferDifferentColor();
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -19,7 +18,6 @@ void processInput(GLFWwindow *window)
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     // make sure the viewport matches the new window dimensions; note that width and
@@ -28,11 +26,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 }
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const GLuint SCR_WIDTH = 800;
+const GLuint SCR_HEIGHT = 600;
 
 // SHADERS
-
 const char *vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "out vec4 VertexColor;\n"
@@ -88,14 +85,14 @@ const char *fragmentShaderDifferentColorSource = "#version 330 core\n"
 
 int main()
 {
-//    return TwoTrianglesSingleBufferSameColor();
-//    return TwoTrianglesMultipleBuffersDifferentColors();
-    return TwoTrianglesSingleBufferDifferentColor();
+//    return DrawTwoTrianglesSingleBufferSameColor();
+    return DrawTwoTrianglesMultipleBuffersDifferentColors();
+//    return DrawTwoTrianglesSingleBufferDifferentColor();
 }
 
 //  -----------------------------------------------------------------------------------------------
 
-int TwoTrianglesSingleBufferSameColor()
+int DrawTwoTrianglesSingleBufferSameColor()
 {
     // Drawing triangles of the same color with 1 VAO and VBO
 
@@ -128,7 +125,7 @@ int TwoTrianglesSingleBufferSameColor()
     glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
     glCompileShader(vertexShader);
     // check for shader compile errors
-    int success;
+    GLint success;
     char infoLog[512];
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
     if (!success)
@@ -147,7 +144,6 @@ int TwoTrianglesSingleBufferSameColor()
         glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
         std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
     }
-
     // link vertexShader and fragmentShader into shaderProgram
     GLuint shaderProgram = glCreateProgram();
     glAttachShader(shaderProgram, vertexShader);
@@ -163,7 +159,7 @@ int TwoTrianglesSingleBufferSameColor()
     glDeleteShader(fragmentShader);
 
     // set up vertex data
-    float vertices[] = {
+    const GLfloat vertices[] = {
         // 1st triangle
         -0.9f, -0.5f, 0.0f, // left
         -0.1f, -0.5f, 0.0f, // right
@@ -175,20 +171,19 @@ int TwoTrianglesSingleBufferSameColor()
     };
 
 
-    unsigned int VAO;
+    GLuint VAO;
     glGenVertexArrays(1, &VAO); // generate a VAO
 
-    unsigned int VBO;
+    GLuint VBO;
     glGenBuffers(1, &VBO); // generate a VBO
 
     glBindVertexArray(VAO); // 1. bind the VAO
-    glBindBuffer(GL_ARRAY_BUFFER, VBO); // 2. bind the VBO with information about its type
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // 3. set VBO data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)nullptr); // 4. put VBO into VAO i.e. into one of the attribute lists (attribute list # 0) of the VAO
-    glBindBuffer(GL_ARRAY_BUFFER, 0); // 5. unbind VBO after registering it to VAO via glVertexAttribPointer
-    glEnableVertexAttribArray(0); // 6. enable the vertex attribute array to which VBO is registered i.e. 0
-    glBindVertexArray(0); // 7. unbind VAO
-
+    glBindBuffer(GL_ARRAY_BUFFER, VBO); // 2.1 bind the VBO with information about its type
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // 2.2 set VBO data
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)nullptr); // 3.1 put VBO into VAO i.e. into one of the attribute lists (attribute list # 0) of the VAO
+    glEnableVertexAttribArray(0); // 3.2 enable the vertex attribute array to which VBO is registered i.e. 0
+    glBindBuffer(GL_ARRAY_BUFFER, 0); // 4. unbind VBO after registering it to VAO via glVertexAttribPointer
+    glBindVertexArray(0); // 5. unbind VAO
 
     // uncomment this call to draw in wireframe polygons.
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -226,7 +221,7 @@ int TwoTrianglesSingleBufferSameColor()
 
 
 
-int TwoTrianglesMultipleBuffersDifferentColors()
+int DrawTwoTrianglesMultipleBuffersDifferentColors()
 {
     // Drawing triangles of different colors with multiple VAOs and VBOs
 
@@ -259,7 +254,7 @@ int TwoTrianglesMultipleBuffersDifferentColors()
     glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
     glCompileShader(vertexShader);
     // check for shader compile errors
-    int success;
+    GLint success;
     char infoLog[512];
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
     if (!success)
@@ -321,21 +316,21 @@ int TwoTrianglesMultipleBuffersDifferentColors()
     glDeleteShader(fragmentShader2);
 
     // set up vertex data
-    float firstTriangle[] = {
+    const GLfloat firstTriangle[] = {
         -0.9f, -0.5f, 0.0f,  // left
         -0.1f, -0.5f, 0.0f,  // right
         -0.5f, 0.5f, 0.0f,  // top
     };
-    float secondTriangle[] = {
+    const GLfloat secondTriangle[] = {
         0.1f, -0.5f, 0.0f,  // left
         0.9f, -0.5f, 0.0f,  // right
         0.5f, 0.5f, 0.0f   // top
     };
 
-    unsigned int VAOs[2];
+    GLuint VAOs[2];
     glGenVertexArrays(2, VAOs); // generate multiple VAOs at the same time
 
-    unsigned int VBOs[2];
+    GLuint VBOs[2];
     glGenBuffers(2, VBOs); // generate multiple VBOs at the same time
 
 
@@ -343,19 +338,19 @@ int TwoTrianglesMultipleBuffersDifferentColors()
     glBindVertexArray(VAOs[0]);
     glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(firstTriangle), firstTriangle, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)nullptr);
     glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
     // second triangle setup
     glBindVertexArray(VAOs[1]);	// note that we bind to a different VAO now
     glBindBuffer(GL_ARRAY_BUFFER, VBOs[1]);	// and a different VBO
     glBufferData(GL_ARRAY_BUFFER, sizeof(secondTriangle), secondTriangle, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)nullptr);
     glEnableVertexAttribArray(0);
-    glBindVertexArray(0); // not really necessary as well, but beware of calls that could affect VAOs while this one is bound (like binding element buffer objects, or enabling/disabling vertex attributes)
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 
 
     // uncomment this call to draw in wireframe polygons.
@@ -380,9 +375,9 @@ int TwoTrianglesMultipleBuffersDifferentColors()
          // draw second triangle using the data from the first VAO
         glUseProgram(shaderProgram2);
         // set uniform color for the second fragment shader linked inside shaderProgram2
-        float timeValue = static_cast<float>(glfwGetTime()); // update the uniform color
-        float greenValue = std::sin(timeValue) / 2.0f + 0.5f;
-        int vertexColorLocation = glGetUniformLocation(shaderProgram2, "ourColor");
+        const GLfloat timeValue = static_cast<float>(glfwGetTime()); // update the uniform color
+        const GLfloat greenValue = std::sin(timeValue) / 2.0f + 0.5f;
+        const GLint vertexColorLocation = glGetUniformLocation(shaderProgram2, "ourColor");
         glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
         glBindVertexArray(VAOs[1]);
         glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -403,7 +398,7 @@ int TwoTrianglesMultipleBuffersDifferentColors()
 }
 
 
-int TwoTrianglesSingleBufferDifferentColor()
+int DrawTwoTrianglesSingleBufferDifferentColor()
 {
     // Drawing triangles of the same color with 1 VAO and VBO
 
@@ -436,7 +431,7 @@ int TwoTrianglesSingleBufferDifferentColor()
     glShaderSource(vertexShaderDifferentColor, 1, &vertexShaderDifferentColorSource, nullptr);
     glCompileShader(vertexShaderDifferentColor);
     // check for shader compile errors
-    int success;
+    GLint success;
     char infoLog[512];
     glGetShaderiv(vertexShaderDifferentColor, GL_COMPILE_STATUS, &success);
     if (!success)
@@ -471,7 +466,7 @@ int TwoTrianglesSingleBufferDifferentColor()
     glDeleteShader(fragmentShaderDifferentColor);
 
     // set up vertex data
-    float vertices[] = {
+    const GLfloat vertices[] = {
         // 1st triangle positions and colors
         -0.9f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, // left
         -0.1f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // right
@@ -482,23 +477,21 @@ int TwoTrianglesSingleBufferDifferentColor()
          0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f // top
     };
 
-
-    unsigned int VAO;
+    GLuint VAO;
     glGenVertexArrays(1, &VAO); // generate a VAO
 
-    unsigned int VBO;
+    GLuint VBO;
     glGenBuffers(1, &VBO); // generate a VBO
 
     glBindVertexArray(VAO); // 1. bind the VAO
-    glBindBuffer(GL_ARRAY_BUFFER, VBO); // 2. bind the VBO with information about its type
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // 3. set VBO data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)nullptr); // 4.1 put VBO POSITION data into VAO i.e. into one of the attribute lists (attribute list # 0) of the VAO
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float))); // 4.2 put VBO COLOR data into VAO i.e. into one of the attribute lists (attribute list # 1) of the VAO
-    glBindBuffer(GL_ARRAY_BUFFER, 0); // 5. unbind VBO after registering it to VAO via glVertexAttribPointer
-    glEnableVertexAttribArray(0); // 6.1 enable the vertex attribute array to which VBO POSITION data is registered i.e. 0
-    glEnableVertexAttribArray(1); // 6.2 enable the vertex attribute array to which VBO COLOR data is registered i.e. 1
-    glBindVertexArray(0); // 7. unbind VAO
-
+    glBindBuffer(GL_ARRAY_BUFFER, VBO); // 2.1 bind the VBO with information about its type
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // 2.2 set VBO data
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)nullptr); // 3.1 put VBO POSITION data into VAO i.e. into one of the attribute lists (attribute list # 0) of the VAO
+    glEnableVertexAttribArray(0); // 3.2 enable the vertex attribute array to which VBO POSITION data is registered i.e. 0
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float))); // 3.3 put VBO COLOR data into VAO i.e. into one of the attribute lists (attribute list # 1) of the VAO
+    glEnableVertexAttribArray(1); // 3.4 enable the vertex attribute array to which VBO COLOR data is registered i.e. 1
+    glBindBuffer(GL_ARRAY_BUFFER, 0); // 4. unbind VBO after registering it to VAO via glVertexAttribPointer
+    glBindVertexArray(0); // 5. unbind VAO
 
     // uncomment this call to draw in wireframe polygons.
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -516,8 +509,8 @@ int TwoTrianglesSingleBufferDifferentColor()
         // draw triangle
         glUseProgram(shaderProgramDifferentColor);
         // set uniform offset for the fragment shader linked inside shaderProgramDifferentColor
-        float x_offset = 0.5f;
-        int offsetLocation = glGetUniformLocation(shaderProgramDifferentColor, "offset");
+        const GLfloat  x_offset = 0.15f;
+        const GLint offsetLocation = glGetUniformLocation(shaderProgramDifferentColor, "offset");
         glUniform4f(offsetLocation,x_offset, 0.0f, 0.0f, 0.0f);
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 6); // Drawing two triangles side by side
