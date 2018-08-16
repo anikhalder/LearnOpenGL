@@ -1,6 +1,8 @@
+// Draw Triangles in a window using shaders, Vertex Buffer(VBO) and Atrribute (VAO) Objects
+// Use: Shaders, Vertex Buffer(VBO), Atrribute (VAO) Objects
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
 #include <iostream>
 #include <math.h>
 
