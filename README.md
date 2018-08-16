@@ -5,7 +5,7 @@
  
  As per the instructions in the tutorial (see https://learnopengl.com/Getting-started/Creating-a-window):
  
- 1. For rendering OpenGL context I use the GLFW library - built the library from its source repository https://github.com/glfw/glfw using cmake.
+ 1. For rendering OpenGL context I use the GLFW library - built the library from its source repository (https://github.com/glfw/glfw) using cmake.
  2. I use GLAD (https://github.com/Dav1dde/glad) as a Loader-Generator for OpenGL.
  
 ## Projects
