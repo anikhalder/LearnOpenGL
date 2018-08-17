@@ -5,11 +5,12 @@ CONFIG -= qt
 
 LIBS += -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 
+INCLUDEPATH += $$PWD/../common/
+
 SOURCES += \
     main.cpp \
-    src/glad.c
+    ../common/src/glad.c
 
 HEADERS += \
-    glad/glad.h \
-    KHR/khrplatform.h
-
+    ../common/glad/glad.h \
+    ../common/KHR/khrplatform.h
