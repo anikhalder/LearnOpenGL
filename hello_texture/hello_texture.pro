@@ -5,7 +5,7 @@ CONFIG -= qt
 
 LIBS += -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 
-INCLUDEPATH += $$PWD/../common/
+INCLUDEPATH += $$PWD/../common
 
 SOURCES += \
     main.cpp \
@@ -14,4 +14,9 @@ SOURCES += \
 HEADERS += \
     ../common/glad/glad.h \
     ../common/KHR/khrplatform.h \
-    ../common/stb_image.h
+    ../common/stb_image.h \
+    ../common/shader.h
+
+DISTFILES += \
+    hello_texture.vert \
+    hello_texture.frag \
