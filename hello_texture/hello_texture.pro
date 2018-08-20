@@ -20,3 +20,4 @@ HEADERS += \
 DISTFILES += \
     hello_texture.vert \
     hello_texture.frag \
+    hello_texture_multiple.frag
