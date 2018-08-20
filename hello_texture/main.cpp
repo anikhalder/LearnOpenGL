@@ -126,6 +126,7 @@ int DrawRectangleTexture()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
+    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis
     unsigned char *data = stbi_load((relPathExePro+std::string("../common/resources/textures/container.jpg")).c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
@@ -264,6 +265,7 @@ int DrawRectangleMultipleTextures()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
+    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis
     unsigned char *data1 = stbi_load((relPathExePro+std::string("../common/resources/textures/container.jpg")).c_str(), &width, &height, &nrChannels, 0);
     if (data1)
     {
