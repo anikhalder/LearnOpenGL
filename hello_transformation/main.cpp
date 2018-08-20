@@ -10,7 +10,6 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 namespace
 {
@@ -65,7 +64,7 @@ int main()
 
 int DrawTransformedRectangleMultipleTextures()
 {
-    // Drawing a rectangle with VAO, VBO, EBO along with texture
+    // Drawing transformed rectangle (scaled, rotated, translated) using VAO, VBO, EBO along with multiple textures
 
     // set relative path of project from the location of the executable file
     std::string relPathExePro("../../LearnOpenGL/hello_transformation/");
@@ -148,17 +147,17 @@ int DrawTransformedRectangleMultipleTextures()
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis
-    unsigned char *data1 = stbi_load((relPathExePro+std::string("../common/resources/textures/container.jpg")).c_str(), &width, &height, &nrChannels, 0);
-    if (data1)
+    unsigned char *data = stbi_load((relPathExePro+std::string("../common/resources/textures/container.jpg")).c_str(), &width, &height, &nrChannels, 0);
+    if (data)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data1);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
     {
         std::cout << "Failed to load texture" << std::endl;
     }
-    stbi_image_free(data1);
+    stbi_image_free(data);
     glBindTexture(GL_TEXTURE_2D, 0); // unbind texture
 
 
@@ -171,7 +170,7 @@ int DrawTransformedRectangleMultipleTextures()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    unsigned char *data = stbi_load((relPathExePro+std::string("../common/resources/textures/awesomeface.png")).c_str(), &width, &height, &nrChannels, 0);
+    data = stbi_load((relPathExePro+std::string("../common/resources/textures/awesomeface.png")).c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
