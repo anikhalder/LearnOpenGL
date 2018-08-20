@@ -231,6 +231,7 @@ int DrawTransformedRectangleMultipleTextures()
         ShaderProgram.setMat4("transform", scaleRotTrans);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr); // glDrawElements makes use of the indices in EBO and associates them with the vertices
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
 
         // draw second container (ONLY BY USING translate and glDrawELements - no need for extra buffer objects or shaders)
         glBindVertexArray(VAO);
@@ -242,6 +243,7 @@ int DrawTransformedRectangleMultipleTextures()
         ShaderProgram.setMat4("transform", scaleTrans);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr); // glDrawElements makes use of the indices in EBO and associates them with the vertices
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         glfwSwapBuffers(window);
