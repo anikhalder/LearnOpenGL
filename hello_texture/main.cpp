@@ -9,6 +9,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+namespace
+{
+// initial mix value for how much we're seeing of either texture
+    float mixValueFromKey = 0.2f;
+}
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 int DrawRectangleTexture();
@@ -19,6 +25,19 @@ void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+    {
+        mixValueFromKey += 0.005f;
+        if(mixValueFromKey >= 1.0f)
+            mixValueFromKey = 1.0f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+    {
+        mixValueFromKey -= 0.005f;
+        if (mixValueFromKey <= 0.0f)
+            mixValueFromKey = 0.0f;
+    }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -221,6 +240,10 @@ int DrawRectangleMultipleTextures()
         -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
          0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
          0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,   1.0f, 1.0f  // top right
+//        -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f,   0.45f, 0.55f, // top left
+//        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   0.45f, 0.45f, // bottom left
+//         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,   0.55f, 0.45f, // bottom right
+//         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,   0.55f, 0.55f  // top right
     };
     const GLuint indices[] = {  // note that we start from 0!
         0, 1, 3,  // first Triangle
@@ -258,11 +281,15 @@ int DrawRectangleMultipleTextures()
     // first texture setup
     glBindTexture(GL_TEXTURE_2D, textures[0]); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
     // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // set texture wrapping to GL_REPEAT (default wrapping method)
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     // set texture filtering parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); // set texture filtering to nearest neighbor to clearly see the texels/pixels
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis
@@ -288,6 +315,8 @@ int DrawRectangleMultipleTextures()
     // set texture filtering parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); // set texture filtering to nearest neighbor to clearly see the texels/pixels
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     // load image, create texture and generate mipmaps
     unsigned char *data = stbi_load((relPathExePro+std::string("../common/resources/textures/awesomeface.png")).c_str(), &width, &height, &nrChannels, 0);
     if (data)
@@ -329,6 +358,9 @@ int DrawRectangleMultipleTextures()
 
         // render container
         ShaderProgram.use();
+        // set the texture mix value in the shader
+        ShaderProgram.setFloat("mixValue", mixValueFromKey);
+
         glBindVertexArray(VAO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); // bind the EBO while a VAO is active as it is required to associate the correct indices of the vertices in the VBO stored in the VAO
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr); // glDrawElements makes use of the indices in EBO and associates them with the vertices
