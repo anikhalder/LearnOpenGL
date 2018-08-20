@@ -9,6 +9,10 @@
  2. I use GLAD (https://github.com/Dav1dde/glad) as a Loader-Generator for OpenGL.
  
 ## Projects
+
+### Getting started (hello) projects:
+
 - hello_world : Project demonstrating basic opengl commands on how to create an empty window with a background color.
 - hello_triangle: Drawing triangles in a window using vertex and fragment shaders, Vertex Buffer (VBO) and Attribute (VAO) Objects.
 - hello_rectangle: Drawing a rectangle using the Element Buffer Object (EBO) along with shaders, VBO and VAO. 
+- hello_texture: Drawing a rectangle (shaders, EBO, VBO, VAO) with texture object(s).
