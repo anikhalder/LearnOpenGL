@@ -1,4 +1,3 @@
-// NOT YET IMPLEMENTED
 // Draw Rectangle with texture
 // Use: Shader class and files, VBO, VAO, EBO and textures
 
