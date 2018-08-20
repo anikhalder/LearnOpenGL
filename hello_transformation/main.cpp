@@ -1,5 +1,5 @@
 // Draw Rectangle with multiple textures and apply tranformations
-// Use: Shader class and files, VBO, VAO, EBO, textures and glm library
+// Use: Shader class and files, VBO, VAO, EBO, textures and glm library for transformations
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
