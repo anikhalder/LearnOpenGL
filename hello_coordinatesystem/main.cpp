@@ -429,7 +429,8 @@ int DrawWireFrameCubeWithCoordinateSystem()
 
         // model matrix : local space to world (model) space
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+//        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
         ShaderProgram.setMat4("model", model);
 
         // view matrix : world (model) space to view (camera) space
@@ -649,7 +650,8 @@ int DrawTexturedCubeWithCoordinateSystem()
 
         // model matrix : local space to world (model) space
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+//        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
         ShaderProgram.setMat4("model", model);
 
         // view matrix : world (model) space to view (camera) space
