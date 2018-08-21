@@ -98,10 +98,10 @@ int DrawRectangleUsingCoordinateSystem()
 
     // set up vertex data (vertex ordering from top right and go counter clockwise)
     const GLfloat vertices[] = {
-         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,   1.0f, 1.0f,  // top right - 0
-        -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f,   0.0f, 1.0f, // top left - 1
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left - 2
-         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right - 3
+         0.5f,  0.5f, 0.0f, 1.0f, 1.0f,  // top right - 0
+        -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, // top left - 1
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left - 2
+         0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right - 3
     };
     const GLuint indices[] = {  // note that we start from 0!
         0, 1, 2,  // first Triangle
@@ -117,12 +117,10 @@ int DrawRectangleUsingCoordinateSystem()
     glBindVertexArray(VAO); // 1. bind the VAO
     glBindBuffer(GL_ARRAY_BUFFER, VBO); // 2.1 bind the VBO with information about its type
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // 2.2 set VBO data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)nullptr); // 3.1 put VBO POSITION data into VAO i.e. into one of the attribute lists (attribute list # 0) of the VAO
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)nullptr); // 3.1 put VBO POSITION data into VAO i.e. into one of the attribute lists (attribute list # 0) of the VAO
     glEnableVertexAttribArray(0); // 3.2 enable the vertex attribute array to which VBO is registered i.e. 0
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3*sizeof(float))); // 3.3 put VBO COLOR data into VAO i.e. into one of the attribute lists (attribute list # 1) of the VAO
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3*sizeof(float))); // 3.3 put VBO TEXTURE COORD data into VAO i.e. into one of the attribute lists (attribute list # 1) of the VAO
     glEnableVertexAttribArray(1); // 3.4 enable the vertex attribute array to which VBO is registered i.e. 1
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6*sizeof(float))); // 3.5 put VBO TEXTURE COORD data into VAO i.e. into one of the attribute lists (attribute list # 2) of the VAO
-    glEnableVertexAttribArray(2); // 3.6 enable the vertex attribute array to which VBO is registered i.e. 2
     glBindBuffer(GL_ARRAY_BUFFER, 0); // 4. unbind VBO
     glBindVertexArray(0); // 5. unbind VAO
 
