@@ -96,16 +96,16 @@ int DrawTransformedRectangleMultipleTextures()
     // build and compile the shader program
     Shader ShaderProgram((relPathExePro+"hello_transformation.vert").c_str(), (relPathExePro+"hello_transformation.frag").c_str());
 
-    // set up vertex data
+    // set up vertex data (vertex ordering from top right and go counter clockwise)
     const GLfloat vertices[] = {
-        -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f,   0.0f, 1.0f, // top left
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,   1.0f, 1.0f  // top right
+         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,   1.0f, 1.0f,  // top right - 0
+        -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f,   0.0f, 1.0f, // top left - 1
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left - 2
+         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right - 3
     };
     const GLuint indices[] = {  // note that we start from 0!
-        0, 1, 3,  // first Triangle
-        3, 1, 2   // second Triangle
+        0, 1, 2,  // first Triangle
+        2, 3, 0   // second Triangle
     };
 
     GLuint VAO;

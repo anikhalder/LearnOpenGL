@@ -163,15 +163,14 @@ int DrawTwoTrianglesSingleBufferSameColor()
     // set up vertex data
     const GLfloat vertices[] = {
         // 1st triangle
+        -0.5f,  0.5f, 0.0f,  // top
         -0.9f, -0.5f, 0.0f, // left
         -0.1f, -0.5f, 0.0f, // right
-         -0.5f,  0.5f, 0.0f,  // top
         // 2nd triangle
+         0.5f,  0.5f, 0.0f,  // top
          0.1f, -0.5f, 0.0f, // left
          0.9f, -0.5f, 0.0f, // right
-         0.5f,  0.5f, 0.0f  // top
     };
-
 
     GLuint VAO;
     glGenVertexArrays(1, &VAO); // generate a VAO
@@ -319,14 +318,14 @@ int DrawTwoTrianglesMultipleBuffersDifferentColors()
 
     // set up vertex data
     const GLfloat firstTriangle[] = {
+        -0.5f, 0.5f, 0.0f,  // top
         -0.9f, -0.5f, 0.0f,  // left
         -0.1f, -0.5f, 0.0f,  // right
-        -0.5f, 0.5f, 0.0f,  // top
     };
     const GLfloat secondTriangle[] = {
+        0.5f, 0.5f, 0.0f,   // top
         0.1f, -0.5f, 0.0f,  // left
         0.9f, -0.5f, 0.0f,  // right
-        0.5f, 0.5f, 0.0f   // top
     };
 
     GLuint VAOs[2];
@@ -470,13 +469,13 @@ int DrawTwoTrianglesSingleBufferDifferentColor()
     // set up vertex data
     const GLfloat vertices[] = {
         // 1st triangle positions and colors
+        -0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  // top
         -0.9f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, // left
         -0.1f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // right
-         -0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  // top
         // 2nd triangle positions and colors
+         0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, // top
          0.1f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  // left
          0.9f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,  // right
-         0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f // top
     };
 
     GLuint VAO;
