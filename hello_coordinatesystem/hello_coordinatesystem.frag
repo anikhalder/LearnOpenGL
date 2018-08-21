@@ -14,6 +14,6 @@ void main()
 {
     //FragColor = mix(texture2D(texture1, TexCoord), texture2D(texture2, TexCoord), 0.2);
     FragColor = mix(texture2D(texture1, TexCoord),
-                    texture2D(texture2, vec2(1.0-TexCoord.s, TexCoord.t)),
+                    texture2D(texture2, vec2(TexCoord.s, TexCoord.t)),
                     mixValue);
 }
