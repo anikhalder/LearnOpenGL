@@ -19,7 +19,7 @@ namespace
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
-int DrawObjectUsingCoordinateSystem();
+int DrawRectangleUsingCoordinateSystem();
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 void processInput(GLFWwindow *window)
@@ -57,12 +57,12 @@ const GLuint SCR_HEIGHT = 600;
 
 int main()
 {
-    return DrawObjectUsingCoordinateSystem();
+    return DrawRectangleUsingCoordinateSystem();
 }
 
 //  -----------------------------------------------------------------------------------------------
 
-int DrawObjectUsingCoordinateSystem()
+int DrawRectangleUsingCoordinateSystem()
 {
     // Drawing transformed rectangle (scaled, rotated, translated) using VAO, VBO, EBO along with multiple textures
 
@@ -96,16 +96,16 @@ int DrawObjectUsingCoordinateSystem()
     // build and compile the shader program
     Shader ShaderProgram((relPathExePro+"hello_coordinatesystem.vert").c_str(), (relPathExePro+"hello_coordinatesystem.frag").c_str());
 
-    // set up vertex data
+    // set up vertex data (vertex ordering from top right and go counter clockwise)
     const GLfloat vertices[] = {
-        -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f,   0.0f, 1.0f, // top left
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,   1.0f, 1.0f  // top right
+         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,   1.0f, 1.0f,  // top right - 0
+        -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f,   0.0f, 1.0f, // top left - 1
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left - 2
+         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right - 3
     };
     const GLuint indices[] = {  // note that we start from 0!
-        0, 1, 3,  // first Triangle
-        3, 1, 2   // second Triangle
+        0, 1, 2,  // first Triangle
+        2, 3, 0   // second Triangle
     };
 
     GLuint VAO;
@@ -192,12 +192,6 @@ int DrawObjectUsingCoordinateSystem()
     glUniform1i(glGetUniformLocation(ShaderProgram.ID, "texture1"), 0); // set it manually
     ShaderProgram.setInt("texture2", 1); // or with shader class uniform utility function
 
-    // scale and rotate by 90 degrees
-//    glm::mat4 scaleRot = glm::mat4(1.0f);
-//    scaleRot = glm::rotate(scaleRot, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
-//    scaleRot = glm::scale(scaleRot, glm::vec3(0.5, 0.5, 0.5));
-//    ShaderProgram.setMat4("transform", scaleRot);
-
     // render loop
     while (!glfwWindowShouldClose(window))
     {
@@ -222,11 +216,6 @@ int DrawObjectUsingCoordinateSystem()
         // draw container and use different transforms (matrices) for using different coordinate systems
         glBindVertexArray(VAO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); // bind the EBO while a VAO is active as it is required to associate the correct indices of the vertices in the VBO stored in the VAO
-//        // scale, rotate (with time) and translate
-//        glm::mat4 scaleRotTrans = glm::mat4(1.0f);
-//        scaleRotTrans = glm::translate(scaleRotTrans, glm::vec3(0.5f, -0.5f, 0.0f));
-//        scaleRotTrans = glm::rotate(scaleRotTrans, (float)glfwGetTime(), glm::vec3(0.0, 0.0, 1.0));
-//        scaleRotTrans = glm::scale(scaleRotTrans, glm::vec3(0.5, 0.5, 0.5));
 
         // create transformations and send them to the shader program by setting the uniforms
 
@@ -249,18 +238,6 @@ int DrawObjectUsingCoordinateSystem()
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr); // glDrawElements makes use of the indices in EBO and associates them with the vertices
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
-
-//        // draw second container (ONLY BY USING translate and glDrawELements - no need for extra buffer objects or shaders)
-//        glBindVertexArray(VAO);
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); // bind the EBO while a VAO is active as it is required to associate the correct indices of the vertices in the VBO stored in the VAO
-//        // scale (with time) and translate
-//        glm::mat4 scaleTrans = glm::mat4(1.0f);
-//        scaleTrans = glm::translate(scaleTrans, glm::vec3(-0.5f, 0.5f, 0.0f));
-//        scaleTrans = glm::scale(scaleTrans, glm::vec3(sin(glfwGetTime()), sin(glfwGetTime()), sin(glfwGetTime())));
-//        ShaderProgram.setMat4("transform", scaleTrans);
-//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr); // glDrawElements makes use of the indices in EBO and associates them with the vertices
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-//        glBindVertexArray(0);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         glfwSwapBuffers(window);
