@@ -17,4 +17,5 @@
 - hello_rectangle: Drawing a rectangle using the Element Buffer Object (EBO) along with shaders, VBO and VAO. 
 - hello_texture: Drawing a rectangle (shaders, EBO, VBO, VAO) with texture object(s).
 - hello_transformation: Drawing rectangle(s) with multiple textures and applying tranformations (scaling, rotation, translation).
+- hello_coordinatesystem: Drawing rectangular object/cube(s) with multiple textures (wire-frame) and using different coordinate system matrices and applying tranformations (scaling, rotation, translation).
 
