@@ -686,7 +686,7 @@ int DrawTexturedCubeWithCoordinateSystem()
 
 int DrawMultipleTexturedCubesWithCoordinateSystem()
 {
-    // Drawing multiple textured cubes using VAO, VBO
+    // Drawing multiple textured cubes (exact same cube) using VAO, VBO and different cube positions using only glm::translate (using no extra VBO etc. for drawing other cubes)
 
     // set relative path of project from the location of the executable file
     std::string relPathExePro("../../LearnOpenGL/hello_coordinatesystem/");
