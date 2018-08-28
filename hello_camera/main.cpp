@@ -1,4 +1,4 @@
-// Draw Rectangular object/cube with multiple textures and use different coordinate systems matrices with camera implementation
+// Draw Rectangular cube(s) with multiple textures and use different coordinate systems matrices with camera implementation
 // Use: Shader class and files, VBO, VAO, EBO, textures, glm library for transformations,
 //      coordinate system matrices and camera implementation
 
@@ -18,14 +18,22 @@ namespace
 
     // initial mix value for how much we're seeing of either texture
     float mixValueFromKey = 0.2f;
+
+    // initial camera setup
+    glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+
+    float cameraSpeed = 0.05f;
+
+    float deltaTime = 0.0f;	// Time between current frame and last frame
+    float lastFrame = 0.0f; // Time of last frame
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
-int DrawTexturedRectangleWithCoordinateSystem();
-int DrawWireFrameCubeWithCoordinateSystem();
-int DrawTexturedCubeWithCoordinateSystem();
-int DrawMultipleTexturedCubesWithCoordinateSystem();
+int DrawTexturedCubeWithSimpleRotatingCamera();
+int DrawMultipleTexturedCubesWithKeyboardCamera();
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 void processInput(GLFWwindow *window)
@@ -45,6 +53,16 @@ void processInput(GLFWwindow *window)
         if (mixValueFromKey <= 0.0f)
             mixValueFromKey = 0.0f;
     }
+
+    cameraSpeed = 2.5f * deltaTime;
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        cameraPos += cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        cameraPos -= cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -63,15 +81,15 @@ const GLuint SCR_HEIGHT = 600;
 
 int main()
 {
-//    return DrawTexturedCubeWithCoordinateSystem();
-    return DrawMultipleTexturedCubesWithCoordinateSystem();
+//    return DrawTexturedCubeWithSimpleRotatingCamera();
+    return DrawMultipleTexturedCubesWithKeyboardCamera();
 }
 
 //  -----------------------------------------------------------------------------------------------
 
-int DrawTexturedCubeWithCoordinateSystem()
+int DrawTexturedCubeWithSimpleRotatingCamera()
 {
-    // Drawing textured cube using VAO, VBO
+    // Drawing textured cube using VAO, VBO and rotating it in x-z plane with camera (glm::lookat function)
 
     // set relative path of project from the location of the executable file
     std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
@@ -256,16 +274,18 @@ int DrawTexturedCubeWithCoordinateSystem()
 
         // model matrix : local space to world (model) space
         glm::mat4 model = glm::mat4(1.0f);
-//        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         ShaderProgram.setMat4("model", model);
 
         // view matrix : world (model) space to view (camera) space
         glm::mat4 view = glm::mat4(1.0f);
-        view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        float radius = 5.0f;
+        float camX = sin(static_cast<float>(glfwGetTime())) * radius;
+        float camZ = cos(static_cast<float>(glfwGetTime())) * radius;
+        view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
         ShaderProgram.setMat4("view", view);
 
-        // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
+        // best practice to set projection matrix outside the main loop only once and not in each frame as it usually doesn't change
         // projection matrix: view (camera) space to clip space
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(45.0f), static_cast<float>(SCR_WIDTH/SCR_HEIGHT), 0.1f, 100.0f);
@@ -288,9 +308,10 @@ int DrawTexturedCubeWithCoordinateSystem()
     return 0;
 }
 
-int DrawMultipleTexturedCubesWithCoordinateSystem()
+int DrawMultipleTexturedCubesWithKeyboardCamera()
 {
     // Drawing multiple textured cubes (exact same cube) using VAO, VBO and different cube positions using only glm::translate (using no extra VBO etc. for drawing other cubes)
+    // along with a keyboard controlled camera (w-a-s-d) via glm::lookat function but restricted to x-z plane
 
     // set relative path of project from the location of the executable file
     std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
@@ -468,6 +489,11 @@ int DrawMultipleTexturedCubesWithCoordinateSystem()
     // render loop
     while (!glfwWindowShouldClose(window))
     {
+        // per-frame time logic
+        float currentFrame = static_cast<float>(glfwGetTime());
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
         // input
         processInput(window);
 
@@ -486,6 +512,11 @@ int DrawMultipleTexturedCubesWithCoordinateSystem()
         // set the texture mix value in the shader
         ShaderProgram.setFloat("mixValue", mixValueFromKey);
 
+        // view matrix : world (model) space to view (camera) space
+        glm::mat4 view = glm::mat4(1.0f);
+        view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+        ShaderProgram.setMat4("view", view);
+
         glBindVertexArray(VAO);
 
         // draw containers in a loop and use different transforms (matrices) for using different coordinate systems
@@ -496,20 +527,14 @@ int DrawMultipleTexturedCubesWithCoordinateSystem()
             // model matrix : local space to world (model) space
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions[i]);
-            if(i % 3 == 0) // make every third container rotate over time
-                model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-            else // rest of the containers are just static
-                model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
+            model = glm::rotate(model, glm::radians(20.0f*i), glm::vec3(1.0f, 0.0f, 0.0f));
             ShaderProgram.setMat4("model", model);
 
-            // view matrix : world (model) space to view (camera) space (in this case can also be set outside the loop as it's the same for all the containers
-            glm::mat4 view = glm::mat4(1.0f);
-            view  = glm::translate(view,  glm::vec3(0.0f, 0.0f, -3.0f));
-            ShaderProgram.setMat4("view", view);
-            glDrawArrays(GL_TRIANGLES, 0, 36); // glDrawArrays makes use of the vertices directly stored in the VBO
+            // view matrix: has been already set outside the loop as it's the same for all the containers
 
             // projection matrix: has been already set outside the main loop
+
+            glDrawArrays(GL_TRIANGLES, 0, 36); // glDrawArrays makes use of the vertices directly stored in the VBO
         }
 
         glBindVertexArray(0);
