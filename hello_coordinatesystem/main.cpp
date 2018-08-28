@@ -898,10 +898,9 @@ int DrawMultipleTexturedCubesWithCoordinateSystem()
                 model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
             else // rest of the containers are just static
                 model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
             ShaderProgram.setMat4("model", model);
 
-            // view matrix : world (model) space to view (camera) space (in this case can also be set outside the loop as it's the same for all the containers
+            // view matrix : world (model) space to view (camera) space (in this case can also be set outside the loop as it's the same for all the containers)
             glm::mat4 view = glm::mat4(1.0f);
             view  = glm::translate(view,  glm::vec3(0.0f, 0.0f, -3.0f));
             ShaderProgram.setMat4("view", view);
