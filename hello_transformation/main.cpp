@@ -13,6 +13,8 @@
 
 namespace
 {
+    std::string project_name = "hello_transformation";
+
     // initial mix value for how much we're seeing of either texture
     float mixValueFromKey = 0.2f;
 }
@@ -67,7 +69,7 @@ int DrawTransformedRectangleMultipleTextures()
     // Drawing transformed rectangle (scaled, rotated, translated) using VAO, VBO, EBO along with multiple textures
 
     // set relative path of project from the location of the executable file
-    std::string relPathExePro("../../LearnOpenGL/hello_transformation/");
+    std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
 
     // glfw: initialize and configure
     glfwInit();
@@ -94,7 +96,7 @@ int DrawTransformedRectangleMultipleTextures()
     }
 
     // build and compile the shader program
-    Shader ShaderProgram((relPathExePro+"hello_transformation.vert").c_str(), (relPathExePro+"hello_transformation.frag").c_str());
+    Shader ShaderProgram((relPathExePro+project_name+".vert").c_str(), (relPathExePro+project_name+".frag").c_str());
 
     // set up vertex data (vertex ordering from top right and go counter clockwise)
     const GLfloat vertices[] = {

@@ -13,6 +13,8 @@
 
 namespace
 {
+    std::string project_name = "hello_coordinatesystem";
+
     // initial mix value for how much we're seeing of either texture
     float mixValueFromKey = 0.2f;
 }
@@ -73,7 +75,7 @@ int DrawTexturedRectangleWithCoordinateSystem()
     // Drawing rectangle using VAO, VBO, EBO, with multiple textures and coordinate system matrices
 
     // set relative path of project from the location of the executable file
-    std::string relPathExePro("../../LearnOpenGL/hello_coordinatesystem/");
+    std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
 
     // glfw: initialize and configure
     glfwInit();
@@ -100,7 +102,7 @@ int DrawTexturedRectangleWithCoordinateSystem()
     }
 
     // build and compile the shader program
-    Shader ShaderProgram((relPathExePro+"hello_coordinatesystem.vert").c_str(), (relPathExePro+"hello_coordinatesystem.frag").c_str());
+    Shader ShaderProgram((relPathExePro+project_name+".vert").c_str(), (relPathExePro+project_name+".frag").c_str());
 
     // set up vertex data (vertex ordering from top right and go counter clockwise)
     const GLfloat vertices[] = {
@@ -264,7 +266,7 @@ int DrawWireFrameCubeWithCoordinateSystem()
     // Drawing wire-frame cube using VAO, VBO, EBO (loading textures but is actually useless in this case)
 
     // set relative path of project from the location of the executable file
-    std::string relPathExePro("../../LearnOpenGL/hello_coordinatesystem/");
+    std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
 
     // glfw: initialize and configure
     glfwInit();
@@ -294,7 +296,7 @@ int DrawWireFrameCubeWithCoordinateSystem()
     glEnable(GL_DEPTH_TEST);
 
     // build and compile the shader program
-    Shader ShaderProgram((relPathExePro+"hello_coordinatesystem.vert").c_str(), (relPathExePro+"hello_coordinatesystem.frag").c_str());
+    Shader ShaderProgram((relPathExePro+project_name+".vert").c_str(), (relPathExePro+project_name+".frag").c_str());
 
     // set up vertex data (vertex ordering from top right and go counter clockwise)
 
@@ -470,7 +472,7 @@ int DrawTexturedCubeWithCoordinateSystem()
     // Drawing textured cube using VAO, VBO
 
     // set relative path of project from the location of the executable file
-    std::string relPathExePro("../../LearnOpenGL/hello_coordinatesystem/");
+    std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
 
     // glfw: initialize and configure
     glfwInit();
@@ -500,7 +502,7 @@ int DrawTexturedCubeWithCoordinateSystem()
     glEnable(GL_DEPTH_TEST);
 
     // build and compile the shader program
-    Shader ShaderProgram((relPathExePro+"hello_coordinatesystem.vert").c_str(), (relPathExePro+"hello_coordinatesystem.frag").c_str());
+    Shader ShaderProgram((relPathExePro+project_name+".vert").c_str(), (relPathExePro+project_name+".frag").c_str());
 
     // set up vertex data (retrieved directly from LearnOpenGL)
     // not really efficient as vertices are duplicated (however needs to be done as each vertex has different texture coordinates)
@@ -689,7 +691,7 @@ int DrawMultipleTexturedCubesWithCoordinateSystem()
     // Drawing multiple textured cubes (exact same cube) using VAO, VBO and different cube positions using only glm::translate (using no extra VBO etc. for drawing other cubes)
 
     // set relative path of project from the location of the executable file
-    std::string relPathExePro("../../LearnOpenGL/hello_coordinatesystem/");
+    std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
 
     // glfw: initialize and configure
     glfwInit();
@@ -719,7 +721,7 @@ int DrawMultipleTexturedCubesWithCoordinateSystem()
     glEnable(GL_DEPTH_TEST);
 
     // build and compile the shader program
-    Shader ShaderProgram((relPathExePro+"hello_coordinatesystem.vert").c_str(), (relPathExePro+"hello_coordinatesystem.frag").c_str());
+    Shader ShaderProgram((relPathExePro+project_name+".vert").c_str(), (relPathExePro+project_name+".frag").c_str());
 
     // set up vertex data (retrieved directly from LearnOpenGL)
     // not really efficient as vertices are duplicated (however needs to be done as each vertex has different texture coordinates)

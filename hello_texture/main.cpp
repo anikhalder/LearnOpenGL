@@ -10,7 +10,9 @@
 
 namespace
 {
-// initial mix value for how much we're seeing of either texture
+    std::string project_name = "hello_texture";
+
+    // initial mix value for how much we're seeing of either texture
     float mixValueFromKey = 0.2f;
 }
 
@@ -67,7 +69,7 @@ int DrawRectangleTexture()
     // Drawing a rectangle with VAO, VBO, EBO along with texture
 
     // set relative path of project from the location of the executable file
-    std::string relPathExePro("../../LearnOpenGL/hello_texture/");
+    std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
 
     // glfw: initialize and configure
     glfwInit();
@@ -94,7 +96,7 @@ int DrawRectangleTexture()
     }
 
     // build and compile the shader program
-    Shader ShaderProgram((relPathExePro+"hello_texture.vert").c_str(), (relPathExePro+"hello_texture.frag").c_str());
+    Shader ShaderProgram((relPathExePro+project_name+".vert").c_str(), (relPathExePro+project_name+".frag").c_str());
 
     // set up vertex data (vertex ordering from top right and go counter clockwise)
     const GLfloat vertices[] = {
@@ -201,10 +203,10 @@ int DrawRectangleTexture()
 
 int DrawRectangleMultipleTextures()
 {
-    // Drawing a rectangle with VAO, VBO, EBO along with texture
+    // Drawing a rectangle with VAO, VBO, EBO along with multiple textures
 
     // set relative path of project from the location of the executable file
-    std::string relPathExePro("../../LearnOpenGL/hello_texture/");
+    std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
 
     // glfw: initialize and configure
     glfwInit();
@@ -231,7 +233,7 @@ int DrawRectangleMultipleTextures()
     }
 
     // build and compile the shader program
-    Shader ShaderProgram((relPathExePro+"hello_texture.vert").c_str(), (relPathExePro+"hello_texture_multiple.frag").c_str());
+    Shader ShaderProgram((relPathExePro+project_name+".vert").c_str(), (relPathExePro+project_name+"_multiple.frag").c_str());
 
     // set up vertex data (vertex ordering from top right and go counter clockwise)
     const GLfloat vertices[] = {
@@ -289,6 +291,7 @@ int DrawRectangleMultipleTextures()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); // set texture filtering to nearest neighbor to clearly see the texels/pixels
 //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis
