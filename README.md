@@ -16,6 +16,7 @@
 - hello_triangle: Drawing triangles in a window using vertex and fragment shaders, Vertex Buffer (VBO) and Attribute (VAO) Objects.
 - hello_rectangle: Drawing a rectangle using the Element Buffer Object (EBO) along with shaders, VBO and VAO. 
 - hello_texture: Drawing a rectangle (shaders, EBO, VBO, VAO) with texture object(s).
-- hello_transformation: Drawing rectangle(s) with multiple textures and applying tranformations (scaling, rotation, translation).
-- hello_coordinatesystem: Drawing rectangular object/cube(s) with multiple textures (wire-frame) and using different coordinate system matrices and applying tranformations (scaling, rotation, translation).
-
+- hello_transformation: Drawing rectangle(s) with multiple textures and tranformations (scaling, rotation, translation).
+- hello_coordinatesystem: Drawing rectangular object/cube(s) with multiple textures (wire-frame) and using different coordinate system matrices and tranformations.
+- hello_camera: Drawing cubes with multiple textures and implementing camera functionality with simple revolving camera (in xz plane), keyboard-mouse controlled camera using different coordinate system matrices and tranformations.
+- hello_camera_class: Drawing cubes with multiple textures and implementing a separate camera class object.
