@@ -356,9 +356,9 @@ int mouseCamera()
             model = glm::rotate(model, glm::radians(20.0f*i), glm::vec3(1.0f, 0.0f, 0.0f));
             ShaderProgram.setMat4("model", model);
 
-            // view matrix: has been already set outside the loop as it's the same for all the containers
+            // view matrix: has been set outside this loop as it's the same for all the containers
 
-            // projection matrix: has been already set outside the loop and not outside the render loop as it could change every framedue to zooming (scrolling)
+            // projection matrix: has been set outside this loop and not outside the render loop as it could change every frame due to zooming (scrolling)
 
             glDrawArrays(GL_TRIANGLES, 0, 36); // glDrawArrays makes use of the vertices directly stored in the VBO
         }
