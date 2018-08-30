@@ -67,7 +67,7 @@ public:
     }
 
     // Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
-    void ProcessKeyboard(Camera_Movement direction, float deltaTime)
+    void ProcessKeyboard(Camera_Movement direction, float deltaTime, bool groundLevel = false)
     {
         float velocity = MovementSpeed * deltaTime;
         if (direction == FORWARD)
@@ -78,6 +78,10 @@ public:
             Position -= Right * velocity;
         if (direction == RIGHT)
             Position += Right * velocity;
+
+        // if the camera stays at the ground level (x-z plane) or not
+        if(groundLevel)
+            Position.y = 0.0f;
     }
 
     // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.

@@ -74,6 +74,18 @@ void processInput(GLFWwindow *window, bool keyboardCamera)
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
             camera.ProcessKeyboard(RIGHT, deltaTime);
     }
+
+//    // if the camera should be restricted to the ground level
+//    if(keyboardCamera) {
+//        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+//            camera.ProcessKeyboard(FORWARD, deltaTime, true);
+//        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+//            camera.ProcessKeyboard(BACKWARD, deltaTime, true);
+//        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+//            camera.ProcessKeyboard(LEFT, deltaTime, true);
+//        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+//            camera.ProcessKeyboard(RIGHT, deltaTime, true);
+//    }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
