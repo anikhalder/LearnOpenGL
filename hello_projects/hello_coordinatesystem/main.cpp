@@ -13,6 +13,7 @@
 
 namespace
 {
+    std::string project_folder = "hello_projects";
     std::string project_name = "hello_coordinatesystem";
 
     // initial mix value for how much we're seeing of either texture
@@ -75,7 +76,7 @@ int DrawTexturedRectangleWithCoordinateSystem()
     // Drawing rectangle using VAO, VBO, EBO, with multiple textures and coordinate system matrices
 
     // set relative path of project from the location of the executable file
-    std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
+    std::string relPathExePro("../../LearnOpenGL/"+project_folder+"/"+project_name+"/");
 
     // glfw: initialize and configure
     glfwInit();
@@ -153,7 +154,7 @@ int DrawTexturedRectangleWithCoordinateSystem()
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis
-    unsigned char *data = stbi_load((relPathExePro+std::string("../common/resources/textures/container.jpg")).c_str(), &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load((relPathExePro+std::string("../../common/resources/textures/container.jpg")).c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -176,7 +177,7 @@ int DrawTexturedRectangleWithCoordinateSystem()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    data = stbi_load((relPathExePro+std::string("../common/resources/textures/awesomeface.png")).c_str(), &width, &height, &nrChannels, 0);
+    data = stbi_load((relPathExePro+std::string("../../common/resources/textures/awesomeface.png")).c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
@@ -266,7 +267,7 @@ int DrawWireFrameCubeWithCoordinateSystem()
     // Drawing wire-frame cube using VAO, VBO, EBO (loading textures but is actually useless in this case)
 
     // set relative path of project from the location of the executable file
-    std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
+    std::string relPathExePro("../../LearnOpenGL/"+project_folder+"/"+project_name+"/");
 
     // glfw: initialize and configure
     glfwInit();
@@ -359,7 +360,7 @@ int DrawWireFrameCubeWithCoordinateSystem()
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis
-    unsigned char *data = stbi_load((relPathExePro+std::string("../common/resources/textures/container.jpg")).c_str(), &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load((relPathExePro+std::string("../../common/resources/textures/container.jpg")).c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -382,7 +383,7 @@ int DrawWireFrameCubeWithCoordinateSystem()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    data = stbi_load((relPathExePro+std::string("../common/resources/textures/awesomeface.png")).c_str(), &width, &height, &nrChannels, 0);
+    data = stbi_load((relPathExePro+std::string("../../common/resources/textures/awesomeface.png")).c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
@@ -472,7 +473,7 @@ int DrawTexturedCubeWithCoordinateSystem()
     // Drawing textured cube using VAO, VBO
 
     // set relative path of project from the location of the executable file
-    std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
+    std::string relPathExePro("../../LearnOpenGL/"+project_folder+"/"+project_name+"/");
 
     // glfw: initialize and configure
     glfwInit();
@@ -581,7 +582,7 @@ int DrawTexturedCubeWithCoordinateSystem()
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis
-    unsigned char *data = stbi_load((relPathExePro+std::string("../common/resources/textures/container.jpg")).c_str(), &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load((relPathExePro+std::string("../../common/resources/textures/container.jpg")).c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -604,7 +605,7 @@ int DrawTexturedCubeWithCoordinateSystem()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    data = stbi_load((relPathExePro+std::string("../common/resources/textures/awesomeface.png")).c_str(), &width, &height, &nrChannels, 0);
+    data = stbi_load((relPathExePro+std::string("../../common/resources/textures/awesomeface.png")).c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
@@ -691,7 +692,7 @@ int DrawMultipleTexturedCubesWithCoordinateSystem()
     // Drawing multiple textured cubes (exact same cube) using VAO, VBO and different cube positions using only glm::translate (using no extra VBO etc. for drawing other cubes)
 
     // set relative path of project from the location of the executable file
-    std::string relPathExePro("../../LearnOpenGL/"+project_name+"/");
+    std::string relPathExePro("../../LearnOpenGL/"+project_folder+"/"+project_name+"/");
 
     // glfw: initialize and configure
     glfwInit();
@@ -813,7 +814,7 @@ int DrawMultipleTexturedCubesWithCoordinateSystem()
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis
-    unsigned char *data = stbi_load((relPathExePro+std::string("../common/resources/textures/container.jpg")).c_str(), &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load((relPathExePro+std::string("../../common/resources/textures/container.jpg")).c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -836,7 +837,7 @@ int DrawMultipleTexturedCubesWithCoordinateSystem()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    data = stbi_load((relPathExePro+std::string("../common/resources/textures/awesomeface.png")).c_str(), &width, &height, &nrChannels, 0);
+    data = stbi_load((relPathExePro+std::string("../../common/resources/textures/awesomeface.png")).c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
