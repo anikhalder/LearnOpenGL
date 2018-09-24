@@ -20,3 +20,8 @@
 - hello_coordinatesystem: Drawing rectangular object/cube(s) with multiple textures (wire-frame) and using different coordinate system matrices and tranformations.
 - hello_camera: Drawing cubes with multiple textures and implementing camera functionality with simple revolving camera (in xz plane), keyboard-mouse controlled camera using different coordinate system matrices and tranformations.
 - hello_camera_class: Drawing cubes with multiple textures and implementing a separate camera class object.
+
+
+### Miscellaneous (misc) projects:
+
+- misc_coordinateaxes : Project for drawing coordinate axes in hello_camera_class project.
