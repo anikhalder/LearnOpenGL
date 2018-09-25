@@ -299,7 +299,7 @@ int drawCoordinateAxes()
 
     // For drawing coordinate axes
     float c = 0.5;
-    const GLfloat verticesAxes[] = {
+    /*const GLfloat verticesAxes[] = {
            0.0f,    0.0f,  0.0f,  0.0f, 0.0f,
          c*0.95f,    0.0f,  0.0f,  0.0f, 0.0f,
          c*0.95f,    0.0f,  0.0f,  0.0f, 0.0f,
@@ -320,8 +320,30 @@ int drawCoordinateAxes()
            0.0f,   c*0.05f,  c*0.9f,  0.0f, 0.0f,
            0.0f,     0.0f,  c*0.95f,  0.0f, 0.0f,
            0.0f,  c*-0.05f,  c*0.9f,  0.0f, 0.0f,
-    };
+    };*/
 
+    const GLfloat verticesAxes[] = {
+           0.00f,    0.00f,    0.00f,    0.00f, 0.00f,
+         c*1.00f,    0.00f,    0.00f,    0.00f, 0.00f,
+         c*1.00f,    0.00f,    0.00f,    0.00f, 0.00f,
+         c*0.95f,    0.00f,  c*0.05f,    0.00f, 0.00f,
+         c*1.00f,    0.00f,    0.00f,    0.00f, 0.00f,
+         c*0.95f,    0.00f, c*-0.05f,    0.00f, 0.00f,
+
+           0.00f,    0.00f,    0.00f,    0.00f, 0.00f,
+           0.00f,  c*1.00f,    0.00f,    0.00f, 0.00f,
+           0.00f,  c*1.00f,    0.00f,    0.00f, 0.00f,
+           0.00f,  c*0.95f,  c*0.05f,    0.00f, 0.00f,
+           0.00f,  c*1.00f,    0.00f,    0.00f, 0.00f,
+           0.00f,  c*0.95f, c*-0.05f,    0.00f, 0.00f,
+
+           0.00f,    0.00f,    0.00f,    0.00f, 0.00f,
+           0.00f,    0.00f,  c*1.00f,    0.00f, 0.00f,
+           0.00f,    0.00f,  c*1.00f,    0.00f, 0.00f,
+         c*0.05f,    0.00f,  c*0.95f,    0.00f, 0.00f,
+           0.00f,    0.00f,  c*1.00f,    0.00f, 0.00f,
+        c*-0.05f,    0.00f,  c*0.95f,    0.00f, 0.00f,
+    };
 
     GLuint VAO_coordaxes;
     glGenVertexArrays(1, &VAO_coordaxes); // generate a VAO for coordinateaxes
